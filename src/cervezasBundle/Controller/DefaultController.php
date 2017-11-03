@@ -10,4 +10,11 @@ class DefaultController extends Controller
     {
         return $this->render('cervezasBundle:Default:index.html.twig');
     }
+    public function idAction($id)
+    {
+        $repository = $this->getDoctrine()->getRepository('cervezasBundle:Cervezas');
+
+        $cervezas = $repository->find($id);
+        return $this->render('cervezasBundle:Default:id.html.twig',array('id'=>$cervezas));
+    }
 }
