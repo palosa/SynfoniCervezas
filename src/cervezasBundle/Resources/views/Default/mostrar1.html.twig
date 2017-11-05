@@ -1,0 +1,19 @@
+{% extends '::base.html.twig' %}
+{% block title %}Cerveceria{% endblock %}
+{% block body %}
+<div class="w3-container">
+  <p>Nombre:<h2>{{ id.nombre }}</h2></p>
+  <p>País:<h2>{{ id.pais }}</h2></p>
+  <p>Pablación:<h2>{{ id.poblacion }}</h2></p>
+  <p>Tipo de cerveza:<h2>{{ id.tipo }}</h2></p>
+  <p>Lugar de importación:<h2>{{ id.importacion }}</h2></p>
+  <p>Tamaño:<h2>{{ id.tamano }}</h2></p>
+  <p>Fecha: {{id.fechaAlmacen|date('y-m-d')}}</p>
+  <p>Cantidad:<h2>{{ id.cantidad }}</h2></p>
+  <div class="w3-card-4" style="width:50%">
+    <img src="{{ asset('img/')}}{{id.foto}}" alt="{{id.nombre}}" style="width:200px"height="300px">
+    <div class="w3-container w3-center">
+    </div>
+  </div>
+</div>
+{% endblock %}
