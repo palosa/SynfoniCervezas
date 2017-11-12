@@ -4,6 +4,8 @@ namespace cervezasBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use cervezasBundle\Entity\Cervezas;
+use cervezasBundle\Form\CervezasType;
+use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
 {
@@ -44,5 +46,49 @@ class DefaultController extends Controller
         return $this->render('cervezasBundle:Default:mostrar1.html.twig',array('id'=>$cervezas));
 
         // return $this->render('cervezasBundle:Default:crear.html.twig',array('Nombre'=>$crearCerveza->getNombre(),'Pais'=>$crearCerveza->getPais()));
+    }
+    public function formAction(Request $request)
+    {
+        $fromCerveza = new cervezas();
+
+        $form = $this->createForm(CervezasType::class,$fromCerveza);
+        $form->handleRequest($request);
+
+          if ($form->isSubmitted() && $form->isValid()) {
+
+            $fromCerveza = $form->getData();
+
+            $DB = $this->getDoctrine()->getManager();
+            $DB->persist($fromCerveza);
+            $DB->flush();
+
+
+            $id = $fromCerveza->getId();
+
+            $repository = $this->getDoctrine()->getRepository('cervezasBundle:Cervezas');
+            $cervezas = $repository->find($id);
+            return $this->render('cervezasBundle:Default:mostrar1.html.twig',array('id'=>$cervezas));
+          }
+        return $this->render('cervezasBundle:Default:form.html.twig',array('form'=> $form->createView() ));
+    }
+    public function modAction(Request $request, $id)
+    {
+       $repository = $this->getDoctrine()->getRepository('cervezasBundle:Cervezas');
+
+       $fromCerveza = $repository->find($id);
+
+        $form = $this->createForm(CervezasType::class,$fromCerveza);
+        $form->handleRequest($request);
+
+          if ($form->isSubmitted() && $form->isValid()) {
+
+            $DB = $this->getDoctrine()->getManager();
+            $DB->persist($fromCerveza);
+            $DB->flush();
+
+            return $this->render('cervezasBundle:Default:mostrar1.html.twig',array('id'=>$fromCerveza));
+          }
+        return $this->render('cervezasBundle:Default:form.html.twig',array('form'=> $form->createView() ));
+
     }
 }

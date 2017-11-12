@@ -7,3 +7,9 @@ cervezas_Id:
 cervezas_crear:
     path:     /crear/{nombre}/{pais}
     defaults: { _controller: cervezasBundle:Default:crear }
+cervezas_Form:
+    path:     /form
+    defaults: { _controller: cervezasBundle:Default:form }
+cervezas_Mod:
+    path:     /mod/{id}
+    defaults: { _controller: cervezasBundle:Default:mod }
